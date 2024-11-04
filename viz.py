@@ -9,11 +9,13 @@ from sklearn.manifold import TSNE
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-B/32", device=device)
 
+
 def get_image_features(image_path):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
     with torch.no_grad():
         image_features = model.encode_image(image)
     return image_features / image_features.norm(dim=-1, keepdim=True)  # 正規化
+
 
 # 特徴量の抽出
 image_features = []

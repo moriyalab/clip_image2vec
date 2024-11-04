@@ -4,7 +4,9 @@ from PIL import Image
 import glob
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Detect device: ", device)
 model, preprocess = clip.load("ViT-B/32", device=device)
+
 
 def get_image_features(image_path):
     image = preprocess(Image.open(image_path)).unsqueeze(0).to(device)
@@ -26,8 +28,5 @@ for index, feature in enumerate(image_features):
             continue
         similarities.append((feature @ feature_.T).item())
 
-similarity_average = sum(similarities) /  len(similarities)
+similarity_average = sum(similarities) / len(similarities)
 print(similarity_average)
-
-# 0.8536337896439236
-# 0.9495137247899262
