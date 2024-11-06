@@ -1,15 +1,10 @@
-FROM nvidia/cuda:12.6.2-cudnn-devel-ubuntu22.04
+FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
 
-RUN apt-get update && apt-get install -y git curl python3-pip
-RUN git config --global --add safe.directory /app
-RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install poetry \
-  && poetry config virtualenvs.create false
+RUN apt update && apt install -y git
 
 WORKDIR /app
 
-COPY pyproject.toml poetry.lock ./
-RUN poetry install --no-root
+RUN python3 -m pip install git+https://github.com/moriyalab/CLIP.git
 
 COPY download_weight.py ./
 RUN python3 download_weight.py
