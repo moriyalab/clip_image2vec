@@ -31,7 +31,7 @@ PLATFORM="$(uname -m)"
 
 if [ $PLATFORM = "x86_64" ]; then
     echo "x86"
-    docker pull ghcr.io/moriyalab/lab_tool:latest
+    docker pull ghcr.io/moriyalab/clip_image2vec:latest
     docker run -it --rm --gpus all --runtime nvidia --shm-size=32G -v $ROOT:/app -w /app --network host ghcr.io/moriyalab/clip_image2vec:latest /bin/bash
 else
     echo "Not Support Platform. Only support x86."
